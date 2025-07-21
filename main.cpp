@@ -5,7 +5,7 @@
 #include <sstream>
 
 namespace reader_cheer {
-    static const std::string read_command = "READ";
+    static const std::string read_command = "READ"; // статическую константу мне кажется было бы удобнее большими буквами выделить, помоему ранее так рекомендовали
     static const std::string cheer_command = "CHEER";
 
     std::unordered_map<size_t, size_t> user_page; // user -> last_page
@@ -20,21 +20,21 @@ namespace reader_cheer {
         page_counts[page]++;
     }
 
-    void ProcessCheer(const int user) {
+    void ProcessCheer(const int user) { 
         if (!user_page.contains(user)) {
-            std::cout << std::setprecision(6) << 0. << '\n';
+            std::cout << std::setprecision(6) << 0. << '\n'; // вывод только cout? вывод было бы логичнее отделить от обраьотки данных
             return;
         }
 
         const size_t total_users = user_page.size();
-        if (total_users == 1) {
+        if (total_users == 1) { 
             std::cout << std::setprecision(6) << 1. << '\n';
             return;
         }
 
         const size_t current_page = user_page[user];
         int less_read = 0;
-        for (int p = 1; p < current_page; ++p) {
+        for (int p = 1; p < current_page; ++p) { // цикл по всем страницам начиная с первой при каждом запросе CHEER
             less_read += page_counts[p];
         }
 
@@ -42,7 +42,7 @@ namespace reader_cheer {
         std::cout << std::setprecision(6) << ratio << '\n';
     }
 
-    void ParseCommand(const std::string& command) {
+    void ParseCommand(const std::string& command) { // функция не только парсит но и выводит результат обработки
         std::istringstream iss(command);
         std::string cmd;
         iss >> cmd;
@@ -77,6 +77,6 @@ void ReadInput(std::istream& in_stream) {
 int main() {
     std::ios_base::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    ReadInput(std::cin);
+    ReadInput(std::cin); // название не соответствует тому что функция делает
     return 0;
 }
